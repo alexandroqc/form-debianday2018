@@ -6,6 +6,8 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
 
+from django.http import Http404
+from django.shortcuts import render
 #from django.core.urlresolvers import reverse
 
 from .models import Participante, TipoParticipacion
@@ -68,6 +70,31 @@ def participanteCreate(request):
             tipo.otro_desc = request.POST.get('ayuda_otro')
         tipo.save()
 
-        return HttpResponse("hecho?")
-        
-    
+        return HttpResponseRedirect('/p/'+str(participante.id))
+    #return HttpResponse("hecho?")
+
+def participanteDetalle(request, pk):
+    try:
+        p = Participante.objects.get(pk=pk)
+        t = TipoParticipacion.objects.get(participante=p)
+    except Participante.DoesNotExist:
+        raise Http404("No existe ese participante")
+    return render(request, 'form/participante_detalle.html',
+                  {'participante':p,
+                   'tipo': t
+                  })
+
+def lista(request):
+    if request.method == "GET":
+        p = []
+        participantes = Participante.objects.all()
+        for par in participantes:
+            try:
+                tipo = TipoParticipacion.objects.get(participante=par)
+                print(tipo)
+                obj = {'p':par, 'tipo': tipo}
+                p.append(obj)
+            except TipoParticipacion.DoesNotExist:
+                print("error", str(par))
+        return render(request, 'form/participante_lista.html',
+                          {'participantes': p})

@@ -1,0 +1,50 @@
+{% extends "base_form.html" %}
+{% block content %}
+    <h2>Detalles participante registrado</h2>
+    <!-- <b>email:</b> {{ participante.email }} -->
+    <br>
+    <b>Nombre:</b> {{ participante.nombres }} {{ participante.apellidos }}
+    <br>
+    <b>Telf:</b> {{ participante.telf }}
+    <br>
+    <b>Grupo:</b> {{ participante.grupo }}
+    <div><small>Su email y número móvil se han registrado.</small></div>
+    <hr>
+    <h3>Modo de participación ({{ tipo.tipo }})</h3>
+    </p>
+    <p>
+	{% if tipo.tipo == "asistente" %}
+	    <p>
+		<b>Interesado en software </b>{{ tipo.asistente_software_deseado }}
+	    </p>
+	{% endif %}
+	{% if tipo.tipo == "expositor" %}
+	    <p>
+		<b>Maneja el software </b>{{ tipo.expositor_software_manejado }}
+	    </p>
+	    <p>
+		<b>Desea exponer el Tema</b> {{ tipo.expositor_tema }}
+	    </p>
+	{% endif %}
+	{% if tipo.tipo == "logistica" %}
+	    <p>
+		<b>Desea colaborar en </b>{{ tipo.logistica_tipo }}
+	    </p>
+	{% endif %}
+	{% if tipo.tipo == "instalador" %}
+	    <p>
+		<b>Requiere capacitación como instalador</b>
+		{% if tipo.instalador_capacitacion %} SI {% else %} NO {% endif %}
+	    </p>
+	    <p>
+		<b>Puede instalar software para:</b> {{ tipo.instalador_tipo_software }}
+	    </p>
+	{% endif %}
+	{% if tipo.tipo == "otro" %}
+	    <p>
+		<b>Desea participar en </b>{{ tipo.otro_desc }}
+	    </p>
+	{% endif %}
+    </p>
+    {{ tipo }}
+{% endblock %}

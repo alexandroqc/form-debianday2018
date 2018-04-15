@@ -17,11 +17,11 @@ from django.contrib import admin
 from django.urls import path
 
 #from form.views import ParticipanteCreateView, ParticipanteList
-from form.views import participanteCreate
+from form.views import participanteCreate, participanteDetalle, lista
 urlpatterns = [
     path('admin/', admin.site.urls),
     # formulario de participacion
-    #path('form/', ParticipanteCreateView.as_view(), name='registrar-participante'),
-    path('form/', participanteCreate, name='registrar-participante')
-    #path('participante/<int:pk>', ParticipanteCreateView.as_view(), name='participante-detalle')
+    path('', participanteCreate, name='registrar-participante'),
+    path('p/<int:pk>', participanteDetalle, name='participante-detalle'),
+    path('p/lista/', lista, name='lista'),
 ]
