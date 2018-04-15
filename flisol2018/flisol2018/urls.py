@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from form.views import ParticipanteCreateView
-
+#from form.views import ParticipanteCreateView, ParticipanteList
+from form.views import participanteCreate
 urlpatterns = [
     path('admin/', admin.site.urls),
     # formulario de participacion
-    path('form/', ParticipanteCreateView.as_view(), name='registrar-participante')
+    #path('form/', ParticipanteCreateView.as_view(), name='registrar-participante'),
+    path('form/', participanteCreate, name='registrar-participante')
+    #path('participante/<int:pk>', ParticipanteCreateView.as_view(), name='participante-detalle')
 ]

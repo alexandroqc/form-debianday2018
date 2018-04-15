@@ -35,14 +35,16 @@ class Participante(models.Model):
 
     telf = models.CharField(max_length=100,
                             default=" ",
-                            help_text="Número de teléfono móvil (opcional)")
+                            help_text="Número de teléfono móvil (opcional)",
+                            blank=True)
     
     sexo = models.CharField(max_length=20,
                             default=' ',
                             choices=SEXO_CHOICES)
     grupo = models.CharField(max_length=300,
                              default=' ',
-                             help_text="Grupo o asociación a la que pertenece (Pude dejar en blanco)")
+                             help_text="Grupo o asociación a la que pertenece (Pude dejar en blanco)",
+                             blank=True)
     grado_academico = models.CharField(max_length=300,
                                        choices=GRADO_ACADEMICO_CHOICES,
                                        default="prefiero no especificar",
@@ -61,10 +63,11 @@ class Participante(models.Model):
                                           help_text="Seleccione la forma en la que desea participar")
     comentarios = models.CharField(max_length=1000,
                                    default=" ",
+                                   blank=True,
                                    help_text='Comentarios o sugerencias para la organización del evento')
 
     def __str__(self):
-        r = str(self.id)+":<"+self.email+'> '+self.nombres+' '+self.apellidos + ', tipo:' + str(self.tipo_participacion)
+        r = str(self.id)+":<"+self.email+'> '+self.nombres+' '+self.apellidos + ', tipo:' + str(self.tipo_de_participacion)
         return r
 
     def get_absolute_url(self):
@@ -145,6 +148,6 @@ class TipoParticipacion(models.Model):
                                  default=" ")
     
     def __str__(self):
-        r = str(self.id) + ') instaldor:' + str(self.instaldor) + ' ,asistente:' + str(self.asistente) + ' ,expositor: ' + str(self.expositor)+ " ,logistica: " +str(self.logistica) + " ,otro" + str(self.otro)
+        r = str(self.id) + ') instaldor:' + str(self.instalador) + ' ,asistente:' + str(self.asistente) + ' ,expositor: ' + str(self.expositor)+ " ,logistica: " +str(self.logistica) + " ,otro" + str(self.otro)
         return r
 
