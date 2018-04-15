@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+  	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta name="description" content="Registro participantes FLISOL 2018 La Paz - Bolivia">
+	<meta name="robots" content="index, follow">
+	<meta name="author" content="Rodrigo Garcia (https://rmgss.net)">
+
+	<link rel="shortcut icon" type="image/png" href="/static/favicon.png">
+
+	<title>FLISOL 2018, La Paz-Bolivia Participantes</title>
+
+   <!-- Bootstrap core CSS -->
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+	<link href="/static/css/flisol2018.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="header">
+	<img src="/static/img/flisol-top-bar.png">
+	<h5>La Paz Bolivia 2018</h5>
+    </div>
+
+    <div if="content">
+
+	{% block content %}
+	{% endblock %}
+    </div>
+</body>
+
+</html>

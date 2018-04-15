@@ -1,0 +1,228 @@
+<html>
+    {% extends "base_form.html" %}
+
+    {% block content %}
+	<h1>Formulario de participación</h1>
+	<form action="crear" method="post" style="background-color: #EEE; padding-left: 15px; border-radius: 9px">
+	    {% csrf_token %}
+	    <div class="form-group">
+		{{ form.email.label_tag }}
+		<br>
+		{{ form.email }}
+	    </div>
+	    <div class="form-group">
+		{{ form.nombres.label_tag }}
+		<br>
+		{{ form.nombres }}
+	    </div>
+	    <div class="form-group">
+		{{ form.apellidos.label_tag }}
+		<br>
+		{{ form.apellidos }}
+	    </div>
+	    <div class="form-group">
+		{{ form.telf.label_tag }}
+		{{ form.telf }}		<small class="form-text text-muted">{{ form.telf.help_text }}</small>
+	    </div>
+	    <div class="form-group">
+		{{ form.sexo.label_tag }}
+		{{ form.sexo }}
+	    </div>
+	    <div class="form-group">
+		{{ form.grupo.label_tag }}
+		{{ form.grupo }}
+		<small class="form-text text-muted">{{ form.grupo.help_text }}</small>
+	    </div>
+	    <div class="form-group">
+		<label>{{ form.grado_academico.help_text }}</label>
+ 		{{ form.grado_academico }}
+	    </div>
+	    <div class="form-group">
+		<label>{{ form.conoce_el_flisol.help_text }}</label>
+		<span style="background-color: #BEF395"> &nbsp;&nbsp;&nbsp;{{ form.conoce_el_flisol }}&nbsp;&nbsp;&nbsp;</span>
+	    </div>
+	    <div class="form-group">
+		<label>{{ form.conoce_el_software_libre.help_text }}</label>
+		<span style="background-color: #BEF395"> &nbsp;&nbsp;&nbsp;{{ form.conoce_el_software_libre }}&nbsp;&nbsp;&nbsp;</span>
+	    </div>
+	    <div class="form-group">
+		<label>{{ form.ha_usado_software_libre.help_text }}</label>
+		<span style="background-color: #BEF395"> &nbsp;&nbsp;&nbsp;{{ form.ha_usado_software_libre }}&nbsp;&nbsp;&nbsp;</span>
+	    </div>
+
+	    <h5>{{ form.tipo_de_participacion.help_text }}</h5>
+	    <div class="form-group" style="background-color: #F1EFCC; border-radius: 5px; padding: 5px;">
+		{{ form.tipo_de_participacion }}
+		<br><br>
+		<div id="ayuda_instalador"
+			 style="visibility: hidden; display: none">
+		    <!-- instaladores -->
+		    <h4 style="color: #9AA17B">Ayudar en instalación de software</h4>
+		    <p>
+			<strong>¿Requiere capacitación para ayudar como instalador?</strong>
+			<span style="background-color: #E5FF73"> &nbsp;&nbsp;
+			    <input name="instalador_capacitacion" id="id_instalador_capacitacion" type="checkbox">
+			    &nbsp;&nbsp;
+			</span>
+		    </p>
+		    <p>
+			<strong>Indique el tipo de software que puede ayudar a instalar</strong>
+			<select id="id_instalador_tipo_software" name="instalador_tipo_software">
+			    <option value="Sistemas Operativos libres para PC" select="">Sistemas Operativos libres para PC
+			    </option>
+			    <option value="Sistemas Operativos libres para Moviles">Sistemas Operativos libres para Moviles
+			    </option>
+			    <option value="Programas libres para diferentes temáticas">Programas libres para diferentes temáticas
+			    </option>
+			    <option value="Otro">
+				Otro
+			    </option>
+			</select>
+		    </p>
+		</div>
+		<!-- Expositores -->
+		<div id="ayuda_expositor"
+		     style="visibility: hidden; display: none">
+		    <h4 style="color: #9AA17B">Como expositor</h4>
+		    <strong>Por favor indica algunos ejemplos del software libre que has manejado (y si gustas algunos ejemplos del uso que le has dado)</strong>
+		    <br>
+		    <textarea id="id_expositor_software_manejado" rows="2" cols="39"
+			      maxlength="500">
+		    </textarea>
+		    <br>
+		    
+		    <strong>Tema que desea exponer:</strong>
+		    <br>
+		    <input id="id_expositor_tema" maxlength="500" size="39">
+		    
+		</div>
+		<!-- Logistica -->
+		<div id="ayuda_logistica"
+		     style="visibility: hidden; display: none">
+		    <h4 style="color: #9AA17B">Apoyo logístico</h4>
+		    <strong>Indica en que el área en que te gustaría colaborar</strong>
+		    <select id="id_logistica_tipo">
+			<option value="Apoyo logístico en la organización y gestión del evento">Apoyo logístico en la organización y gestión del evento</option>
+			<option value="Difusión en redes sociales">
+			    Difusión en redes sociales
+			</option>
+			<option value="Difusión en prensa y otros medios de comunicación">
+			    Difusión en prensa y otros medios de comunicación
+			</option>
+			<option value="Documentar el día del evento (Fotografías, vídeos, otros)">
+			    Documentar el día del evento (Fotografías, vídeos, otros)
+			</option>
+			<option value="Otro">
+			    Otro
+			</option>
+		    </select>
+		</div>
+		<!-- Otro -->
+		<div id="ayuda_otro"
+		     style="visibility: hidden; display: none">
+		    <strong> ¿De qué otra forma quiere participar? </strong>
+		    <input id="id_ayuda_otro" maxlength="500" size="39">
+		</div>
+
+		<input type="hidden" id="id_tipo_de_participacion_val" name="tipo_participacion_val" value=""/>
+
+		<!-- aqui codigo javascript -->
+		<script>
+		 let domTipoParticipacion = document.getElementById("id_tipo_de_participacion");
+		 
+		 let domAyudaLogistica = document.getElementById("ayuda_logistica");
+		 let domAyudaInstalador = document.getElementById("ayuda_instalador");
+		 let domAyudaExpositor = document.getElementById("ayuda_expositor");
+		 let domAyudaOtro = document.getElementById("ayuda_otro");
+		 let domTipoParticipacionVal = document.getElementById("id_tipo_de_participacion_val");
+		 
+		 let asistente, mesa, instalador, expositor, logistica, otro = false;
+
+		 function actualizarSleccionParticipacion() {
+		     OcultarBloques();
+		     for (let option of domTipoParticipacion.options) {
+			 if (option.selected) {
+			     asistente = option.value.startsWith("Quiero que me ayuden")? true: false;
+			     expositor = option.value.startsWith("Como expositor")? true: false;
+			     instalador = option.value.startsWith("Ayudando en la instala")? true: false;
+			     mesa = option.value.startsWith("Me gustaría una mesa")? true: false;
+			     logistica = option.value.startsWith("Quiero ayudar en la organización")?true:false;
+			     otro = option.value.startsWith("Otro");
+			     break;
+			 }
+		     }
+		     console.log("asistente",asistente,"instalador",instalador,'mesa',mesa,'otro',otro, 'logistica', logistica, 'expositor',expositor);
+
+		 }
+		 actualizarSleccionParticipacion();
+
+		 // handlers
+		 domTipoParticipacion.addEventListener("click", event => {
+		     actualizarSleccionParticipacion();
+		     if (instalador) {
+			 domAyudaInstalador.style.visibility = "visible";
+			 domAyudaInstalador.style.display = "block";
+			 domTipoParticipacionVal.setAttribute("value", "instalador");
+		     }
+		     if (logistica) {
+			 domAyudaLogistica.style.visibility = "visible";
+			 domAyudaLogistica.style.display = "block";
+			 domTipoParticipacionVal.setAttribute("value", "logistica");
+		     }
+		     if (expositor) {
+			 domAyudaExpositor.style.visibility = "visible";
+			 domAyudaExpositor.style.display = "block";
+			 domTipoParticipacionVal.setAttribute("value", "expositor");
+		     }
+		     if (otro) {
+			 domAyudaOtro.style.visibility = "visible";
+			 domAyudaOtro.style.display = "block";
+			 domTipoParticipacionVal.setAttribute("value", "otro");
+		     }
+		     if (asistente) {
+			 domTipoParticipacionVal.setAttribute("value", "asistente");
+		     }
+		     if (mesa) {
+			 domTipoParticipacionVal.setAttribute("value", "mesa");
+		     }
+		 });
+
+		 function OcultarBloques() {
+		     domAyudaInstalador.style.visibility = "hidden";
+		     domAyudaInstalador.style.display = "none";
+		     domAyudaLogistica.style.visibility = "hidden";
+		     domAyudaLogistica.style.display = "none";
+		     domAyudaExpositor.style.visibility = "hidden";
+		     domAyudaExpositor.style.display = "none";
+		     domAyudaOtro.style.visibility = "hidden";
+		     domAyudaOtro.style.display = "none";
+		 }
+		</script>
+
+
+	    </div>
+	    <div class="form-group">
+		{{ form.comentarios.help_text }} (opcional)
+		<br>
+		{{ form.comentarios }}
+	    </div>
+	    
+	    <input type="submit" class="btn btn-primary" value="CONFIRMAR">
+	</form>
+
+	<hr>
+	<form action="" method="post"> {% csrf_token %}
+	    <div class="form-group">
+		{{ form.as_p }}
+		<input type="submit" value="Save" />
+	    </div>
+	</form>
+	    <hr>
+	    {% for field in form %}
+		{{ field.label_tag }} - 
+		{{ field.errors }} - {{ field.help_text }}
+		{{ field }}
+		<br>
+	    {% endfor %}
+    {% endblock %}
+</html>
