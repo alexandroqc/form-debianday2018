@@ -1,7 +1,7 @@
 {% extends "base_form.html" %}
 {% block content %}
     <h3>Lista rápida de participantes</h3>
-    {% for p in participantes %}
+    {% for p in participantes reversed %}
 	<hr>
 	<b>Nombre:</b> {{ p.p.nombres }} {{ p.p.apellidos }}
 	&nbsp;&nbsp;&nbsp;<b>Telf:</b> {{ p.p.telf }}
