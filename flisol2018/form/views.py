@@ -62,7 +62,10 @@ def participanteCreate(request):
         if request.POST.get('tipo_participacion_val') == 'instalador':
             tipo.tipo = 'instalador'
             tipo.instalador = True
-            tipo.instalador_capacitacion = request.POST.get('instalador_capacitacion')
+            if (request.POST.get('instalador_capacitacion') == 'on'):
+                tipo.instalador_capacitacion = True
+            else:
+                tipo.instalador_capacitacion = False
             tipo.instalador_tipo_software = request.POST.get('instalador_tipo_software')
         if request.POST.get('tipo_participacion_val') == 'otro':
             tipo.tipo = 'otro'
