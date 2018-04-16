@@ -197,12 +197,6 @@
 	     }
 	 }
 	 console.log("asistente",asistente,"instalador",instalador,'mesa',mesa,'otro',otro, 'logistica', logistica, 'expositor',expositor);
-
-     }
-     actualizarSleccionParticipacion();
-
-     domTipoParticipacion.addEventListener("click", event => {
-	 actualizarSleccionParticipacion();
 	 if (instalador) {
 	     domAyudaInstalador.style.visibility = "visible";
 	     domAyudaInstalador.style.display = "block";
@@ -232,6 +226,11 @@
 	 if (mesa) {
 	     domTipoParticipacionVal.setAttribute("value", "mesa");
 	 }
+     }
+     actualizarSleccionParticipacion();
+     
+     domTipoParticipacion.addEventListener("change", event => {
+	 actualizarSleccionParticipacion();
      });
 
      function OcultarBloques() {

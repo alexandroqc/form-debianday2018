@@ -34,9 +34,10 @@ def participanteCreate(request):
         return render(request, 'form/participante_form.html', {'form':form})
 
     if request.method == "POST":
+        print (request.POST)
         form = ParticipanteForm(request.POST)
         print(form.is_valid())
-        print('errors:   >>>'+str(form.errors))
+        #print('errors:   >>>'+str(form.errors))
         if not form.is_valid():
             return HttpResponse("Error al llenar el formulario")
 
@@ -50,16 +51,16 @@ def participanteCreate(request):
             tipo.tipo = 'asistente'
             tipo.asistente = True
             tipo.asistente_software_deseado = request.POST.get('asistente_software_deseado')
-        if request.POST.get('tipo_participacion_val') == 'expositor':
+        elif request.POST.get('tipo_participacion_val') == 'expositor':
             tipo.tipo = 'expositor'
             tipo.expositor = True
             tipo.expositor_software_manejado = request.POST.get('expositor_software_manejado')
             tipo.expositor_tema = request.POST.get('expositor_tema')
-        if request.POST.get('tipo_participacion_val') == 'logistica':
+        elif request.POST.get('tipo_participacion_val') == 'logistica':
             tipo.tipo = 'logistica'
             tipo.logistica = True
             tipo.logistica_tipo = request.POST.get('logistica_tipo')
-        if request.POST.get('tipo_participacion_val') == 'instalador':
+        elif request.POST.get('tipo_participacion_val') == 'instalador':
             tipo.tipo = 'instalador'
             tipo.instalador = True
             if (request.POST.get('instalador_capacitacion') == 'on'):
@@ -67,7 +68,7 @@ def participanteCreate(request):
             else:
                 tipo.instalador_capacitacion = False
             tipo.instalador_tipo_software = request.POST.get('instalador_tipo_software')
-        if request.POST.get('tipo_participacion_val') == 'otro':
+        elif request.POST.get('tipo_participacion_val') == 'otro':
             tipo.tipo = 'otro'
             tipo.otro = True
             tipo.otro_desc = request.POST.get('ayuda_otro')
