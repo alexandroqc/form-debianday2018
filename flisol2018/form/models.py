@@ -148,6 +148,11 @@ class TipoParticipacion(models.Model):
                                  default=" ")
     
     def __str__(self):
-        r = str(self.id) + ') instaldor:' + str(self.instalador) + ' ,asistente:' + str(self.asistente) + ' ,expositor: ' + str(self.expositor)+ " ,logistica: " +str(self.logistica) + " ,otro" + str(self.otro)
+        r = str(self.id) + '(' + str(self.participante.id) + ')' + self.tipo +' : ' 
+        r = r + str(self.logistica_tipo) if self.logistica else r
+        r = r + str(self.expositor_tema) if self.expositor else r
+        r = r + str(self.asistente_software_deseado) if self.asistente else r
+        r = r + str(self.instalador_tipo_software) if self.instalador else r
+        r = r + str(self.otro_desc) if self.otro else r
         return r
 
