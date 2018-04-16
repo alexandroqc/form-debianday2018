@@ -1,14 +1,15 @@
 {% extends "base_form.html" %}
 {% block content %}
     <h2>Detalles participante registrado</h2>
-    <!-- <b>email:</b> {{ participante.email }} -->
+    <b>email:</b> {{ participante.email }}
     <br>
     <b>Nombre:</b> {{ participante.nombres }} {{ participante.apellidos }}
     <br>
     <b>Telf:</b> {{ participante.telf }}
     <br>
     <b>Grupo:</b> {{ participante.grupo }}
-    <div><small>Su email y número móvil se han registrado.</small></div>
+    
+    <div><small><b>Sexo:</b> {{ participante.sexo }}</small></div>
     <hr>
     <h3>Modo de participación ({{ tipo.tipo }})</h3>
     </p>
@@ -44,6 +45,15 @@
 	    <p>
 		<b>Desea participar en </b>{{ tipo.otro_desc }}
 	    </p>
+	{% endif %}
+    </p>
+    <p>
+	{% if participante.comentarios != " " %}
+	    <b>Ha dejado el comentario:</b>
+	    <p>
+		{{ participante.comentarios }}
+	    </p>
+	    
 	{% endif %}
     </p>
 {% endblock %}

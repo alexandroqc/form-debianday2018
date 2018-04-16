@@ -3,7 +3,7 @@
     <h3>Lista rápida de participantes</h3>
     {% for p in participantes reversed %}
 	<hr>
-	<b>Nombre:</b> {{ p.p.nombres }} {{ p.p.apellidos }}
+	<b>Nombre:</b> <a href="/p/{{ p.p.id }}">{{ p.p.nombres }} {{ p.p.apellidos }}</a>
 	&nbsp;&nbsp;&nbsp;<b>Telf:</b> {{ p.p.telf }}
 	<br>
 	<b>Grupo:</b> {{ p.p.grupo }}
