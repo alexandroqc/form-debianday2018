@@ -113,10 +113,12 @@ class TipoParticipacion(models.Model):
     expositor = models.BooleanField(default=False)
     expositor_software_manejado = models.CharField(max_length=1000,
                                                      help_text="Por favor indica algunos ejemplos del software libre que has manejado (y si gustas algunos ejemplos del uso que le has dado)",
-                                                   default=" ")
+                                                   default=" ",
+                                                   blank=True)
     expositor_tema = models.CharField(max_length=500,
                                       help_text="Indica el tema que desea exponer",
-                                      default=" ")
+                                      default=" ",
+                                      blank=True)
 
     # asistentes
     asistente = models.BooleanField(default=False)
@@ -124,7 +126,8 @@ class TipoParticipacion(models.Model):
                                                   choices=ASISTENTE_SOFTWARE_DESEADO_CHOICES,
                                                   default=ASISTENTE_SOFTWARE_DESEADO_CHOICES[0])
     asistente_otro_desc = models.CharField(max_length=500,
-                                           default=" ")
+                                           default=" ",
+                                           blank=True)
     
     # para instaladores
     instalador = models.BooleanField(default=False)
@@ -140,7 +143,7 @@ class TipoParticipacion(models.Model):
     logistica_tipo = models.CharField(max_length=500,
                                       choices=LOGISTICA_TIPO_CHOICES)
     logistica_otro_desc = models.CharField(max_length=1000,
-                                           default=" ")
+                                           default=" ", blank=True)
 
     # otro tipo de ayuda
     otro = models.BooleanField(default=False)
