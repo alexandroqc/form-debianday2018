@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import hashlib
 
 from django.template.response import TemplateResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
@@ -13,21 +14,9 @@ from django.shortcuts import render
 from .models import Participante, TipoParticipacion
 from .forms import ParticipanteForm
 
+from flisol2018.settings import SECRET_1
+
 # Create your views here.
-class ParticipanteList(ListView):
-    model = Participante
-
-class ParticipanteCreateView(CreateView):
-    model = Participante
-    fields = ['email', 'nombres', 'apellidos', 'telf', 'sexo', 'grupo', 'grado_academico', 'conoce_el_flisol', 'conoce_el_software_libre', 'ha_usado_software_libre', 'tipo_de_participacion', 'comentarios']
-
-    def form_valid(self, form):
-        #form.instance.created_by = self.request.user
-        print(super().form_valid(form))
-        #return super().form_valid(form)
-        return HttpResponse("vamos")
-
-
 def participanteCreate(request):
     if request.method == "GET":
         form = ParticipanteForm()
@@ -68,18 +57,34 @@ def participanteCreate(request):
             else:
                 tipo.instalador_capacitacion = False
             tipo.instalador_tipo_software = request.POST.get('instalador_tipo_software')
+        elif request.POST.get('tipo_participacion_val') == 'mesa':
+            tipo.tipo = 'mesa'
         elif request.POST.get('tipo_participacion_val') == 'otro':
             tipo.tipo = 'otro'
             tipo.otro = True
             tipo.otro_desc = request.POST.get('ayuda_otro')
         tipo.save()
-
-        return HttpResponseRedirect('/p/'+str(participante.id))
+        
+        ruta = hashlib.sha1(SECRET_1.encode('utf-8')*(participante.id)).hexdigest()
+        print (ruta)
+        return HttpResponseRedirect('/p/'+ruta)
     #return HttpResponse("hecho?")
 
-def participanteDetalle(request, pk):
+def participanteDetalle(request, slg):
+    # buscando el slug que tenga que ver con la clave
+    p_id = -1
+    for p in Participante.objects.all():
+        test = hashlib.sha1(SECRET_1.encode('utf-8')*p.id).hexdigest()
+        if test == slg:
+            p_id = p.id
+            break;
+        
+    if p_id <= 0:
+        print('no funciona ese', slg)
+        raise Http404("No existe ese participante")
+    
     try:
-        p = Participante.objects.get(pk=pk)
+        p = Participante.objects.get(pk=p_id)
         t = TipoParticipacion.objects.get(participante=p)
     except Participante.DoesNotExist:
         raise Http404("No existe ese participante")
@@ -96,7 +101,8 @@ def lista(request):
             try:
                 tipo = TipoParticipacion.objects.get(participante=par)
                 print(tipo)
-                obj = {'p':par, 'tipo': tipo}
+                slug = hashlib.sha1(SECRET_1.encode('utf-8')*par.id).hexdigest()
+                obj = {'p':par, 'tipo': tipo, 'slug': slug}
                 p.append(obj)
             except TipoParticipacion.DoesNotExist:
                 print("error", str(par))

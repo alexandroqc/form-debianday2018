@@ -1,9 +1,10 @@
 {% extends "base_form.html" %}
 {% block content %}
     <h3>Lista rápida de participantes</h3>
+    <a href="/" class="btn btn-ligth btn-sm">Regístrate</a>
     {% for p in participantes reversed %}
 	<hr>
-	<b>Nombre:</b> <a href="/p/{{ p.p.id }}">{{ p.p.nombres }} {{ p.p.apellidos }}</a>
+	<b>Nombre:</b> <a href="/p/{{ p.slug }}">{{ p.p.nombres }} {{ p.p.apellidos }}</a>
 	&nbsp;&nbsp;&nbsp;<b>Telf:</b> {{ p.p.telf }}
 	<br>
 	<b>Grupo:</b> {{ p.p.grupo }}

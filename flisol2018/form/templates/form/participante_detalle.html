@@ -1,11 +1,11 @@
 {% extends "base_form.html" %}
 {% block content %}
     <h2>Detalles participante registrado</h2>
-    <b>email:</b> {{ participante.email }}
+    <b>email:</b> {# {{ participante.email }} #}<small>registrado</small>
     <br>
     <b>Nombre:</b> {{ participante.nombres }} {{ participante.apellidos }}
     <br>
-    <b>Telf:</b> {{ participante.telf }}
+    <b>Telf:</b> {# {{ participante.telf }} #} <small>registrado</small>
     <br>
     <b>Grupo:</b> {{ participante.grupo }}
     

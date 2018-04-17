@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # formulario de participacion
     path('', participanteCreate, name='registrar-participante'),
-    path('p/<int:pk>', participanteDetalle, name='participante-detalle'),
+    #path('p/<int:pk>', participanteDetalle, name='participante-detalle'),
+    path('p/<slug:slg>', participanteDetalle, name='participante-detalle'),
     path('p/lista/', lista, name='lista'),
 ]
