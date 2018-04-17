@@ -5,9 +5,7 @@
     {% for p in participantes reversed %}
 	<hr>
 	<b>Nombre:</b> <a href="/p/{{ p.slug }}">{{ p.p.nombres }} {{ p.p.apellidos }}</a>
-	&nbsp;&nbsp;&nbsp;<b>Telf:</b> {{ p.p.telf }}
-	<br>
-	<b>Grupo:</b> {{ p.p.grupo }}
+	&nbsp;&nbsp;&nbsp;<b>Grupo:</b> {{ p.p.grupo }}
 	<br>
 	<b>Quiere participar como:</b> <code>{{ p.tipo.tipo }}</code>
 	<br>

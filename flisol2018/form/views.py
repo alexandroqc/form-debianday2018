@@ -33,9 +33,13 @@ def participanteCreate(request):
         participante = form.save()
         print ("PAR",str(participante))
 
-        # creando el tipo de participacion
+        # creando el tipo de participacion                          
         tipo = TipoParticipacion()
-        tipo.participante = participante
+        try:
+            tipo.participante = participante
+        except Exception as error:
+            print ("error al crear tipo", error)
+            
         if request.POST.get('tipo_participacion_val') == 'asistente':
             tipo.tipo = 'asistente'
             tipo.asistente = True
