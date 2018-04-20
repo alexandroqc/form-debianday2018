@@ -74,7 +74,7 @@ def participanteCreate(request):
         return HttpResponseRedirect('/p/'+ruta)
     #return HttpResponse("hecho?")
 
-def participanteDetalle(request, slg):
+def participanteDetalle(request, slg, md=' '):
     # buscando el slug que tenga que ver con la clave
     p_id = -1
     for p in Participante.objects.all():
@@ -93,23 +93,27 @@ def participanteDetalle(request, slg):
     except Participante.DoesNotExist as e:
         print ('error:', e)
         raise Http404("No existe ese participante")
+
     return render(request, 'form/participante_detalle.html',
                   {'participante':p,
-                   'tipo': t
+                   'tipo': t,
+                   'mas_detalles': md.count('_')>0
                   })
 
-def lista(request):
+def lista(request, slg=''):
+    print ('slg:',slg)
     if request.method == "GET":
         p = []
         participantes = Participante.objects.all()
         for par in participantes:
             try:
                 tipo = TipoParticipacion.objects.get(participante=par)
-                print(tipo)
                 slug = hashlib.sha1(SECRET_1.encode('utf-8')*par.id).hexdigest()
                 obj = {'p':par, 'tipo': tipo, 'slug': slug}
                 p.append(obj)
             except TipoParticipacion.DoesNotExist as e:
                 print("error", str(par), str(e))
         return render(request, 'form/participante_lista.html',
-                          {'participantes': p})
+                          {'participantes': p ,
+                           'mas_detalles': slg.count('_')>0})
+

@@ -9,6 +9,12 @@
 	<br>
 	<b>Quiere participar como:</b> <code>{{ p.tipo.tipo }}</code>
 	<br>
+	{% if mas_detalles %}
+	    <b>Email:</b> {{ p.p.email }}
+	    <br>
+	    <b>Telf:</b> {{ p.p.telf }}
+	{% endif %}
+	<br>
 	{% if p.tipo.tipo == "asistente" %}
 	    <b>Interesado en software </b> {{ p.tipo.asistente_software_deseado }}
 		<br>

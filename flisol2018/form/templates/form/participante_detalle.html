@@ -1,11 +1,23 @@
 {% extends "base_form.html" %}
 {% block content %}
     <h2>Detalles participante registrado</h2>
-    <b>email:</b> {# {{ participante.email }} #}<small>registrado</small>
     <br>
     <b>Nombre:</b> {{ participante.nombres }} {{ participante.apellidos }}
     <br>
-    <b>Telf:</b> {# {{ participante.telf }} #} <small>registrado</small>
+    <b>email:</b>
+    {% if mas_detalles %}
+	<code>{{ participante.email }}</code>
+    {% else %}
+	<small>registrado</small>
+    {% endif %}
+    
+    <br>
+    <b>Telf:</b>
+    {% if mas_detalles %}
+	<span class="text-muted">{{ participante.telf }}</span>
+    {% else %}
+	 <small>registrado</small>
+    {% endif %}
     <br>
     <b>Grupo:</b> {{ participante.grupo }}
     
