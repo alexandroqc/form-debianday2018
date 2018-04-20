@@ -4,7 +4,7 @@
     <a href="/" class="btn btn-ligth btn-sm">Regístrate</a>
     {% for p in participantes reversed %}
 	<hr>
-	<b>Nombre:</b> <a href="/p/{{ p.slug }}">{{ p.p.nombres }} {{ p.p.apellidos }}</a>
+	<b>Nombre:</b> <a href="/par/{{ p.slug }}/">{{ p.p.nombres }} {{ p.p.apellidos }}</a>
 	&nbsp;&nbsp;&nbsp;<b>Grupo:</b> {{ p.p.grupo }}
 	<br>
 	<b>Quiere participar como:</b> <code>{{ p.tipo.tipo }}</code>
