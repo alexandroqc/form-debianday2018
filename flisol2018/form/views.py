@@ -71,7 +71,7 @@ def participanteCreate(request):
         
         ruta = hashlib.sha1(SECRET_1.encode('utf-8')*(participante.id)).hexdigest()
         print (ruta)
-        return HttpResponseRedirect('/p/'+ruta)
+        return HttpResponseRedirect('/par/'+ruta)
     #return HttpResponse("hecho?")
 
 def participanteDetalle(request, slg, md=' '):
@@ -101,9 +101,21 @@ def participanteDetalle(request, slg, md=' '):
                   })
 
 def lista(request, slg=''):
-    print ('slg:',slg)
     if request.method == "GET":
         p = []
+
+        numAsistentes = numExpositores = numLogistica = numMesas = 0
+        total = numOtro = 0
+        try:
+            numAsistentes = TipoParticipacion.objects.filter(tipo='asistente').count()
+            numExpositores = TipoParticipacion.objects.filter(tipo='expositor').count()
+            numLogistica = TipoParticipacion.objects.filter(tipo='logistica').count()
+            numMesas = TipoParticipacion.objects.filter(tipo='mesa').count()
+            numOtro = TipoParticipacion.objects.filter(tipo='otro').count()
+            total = TipoParticipacion.objects.all().count()
+        except Exception as e:
+            print ("error:", e)
+
         participantes = Participante.objects.all()
         for par in participantes:
             try:
@@ -115,5 +127,11 @@ def lista(request, slg=''):
                 print("error", str(par), str(e))
         return render(request, 'form/participante_lista.html',
                           {'participantes': p ,
-                           'mas_detalles': slg.count('_')>0})
+                           'mas_detalles': slg.count('_')>0,
+                           'expositores': numExpositores,
+                           'asistentes': numAsistentes,
+                           'logistica': numLogistica,
+                           'mesas': numMesas,
+                           'otro': numOtro,
+                           'total': total})
 

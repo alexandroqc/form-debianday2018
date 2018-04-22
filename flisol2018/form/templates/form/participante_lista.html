@@ -1,7 +1,28 @@
 {% extends "base_form.html" %}
 {% block content %}
     <h3>Lista rápida de participantes</h3>
-    <a href="/" class="btn btn-ligth btn-sm">Regístrate</a>
+    <a href="/" class="btn btn-ligth btn-sm">Regístrate</a> | <a class="btn btn-ligth btn-sm" href="#lista">Lista</a>
+
+    <!-- estadisticas -->
+    <div>
+	<canvas id="canvas1"></canvas>
+    </div>	
+    <script>
+     let cx = document.getElementById("canvas1").getContext("2d");
+     cx.fillStyle = "blue";
+     cx.fillRect(10, 145, 55, {{ asistentes }});
+     cx.fillStyle = "green";
+     cx.fillRect(60, 145, 55, {{ expositores }});
+     cx.fillStyle = "red";
+     cx.fillRect(60, 195, 55, {{ logistica }});
+     cx.fillStyle = "pink";
+     cx.fillRect(60, 235, 55, {{ mesas }});
+     cx.fillStyle = "yellow";
+     cx.fillRect(60, 285, 55, {{ otro }});
+
+    </script>
+	<b>Total registrados:</b> {{ total }}
+    
     {% for p in participantes reversed %}
 	<hr>
 	<b>Nombre:</b> <a href="/par/{{ p.slug }}/">{{ p.p.nombres }} {{ p.p.apellidos }}</a>
