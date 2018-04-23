@@ -1,28 +1,38 @@
 {% extends "base_form.html" %}
 {% block content %}
-    <h3>Lista rápida de participantes</h3>
     <a href="/" class="btn btn-ligth btn-sm">Regístrate</a> | <a class="btn btn-ligth btn-sm" href="#lista">Lista</a>
 
     <!-- estadisticas -->
     <div>
-	<canvas id="canvas1"></canvas>
+	<canvas id="canvas1" width="350"></canvas>
     </div>	
     <script>
      let cx = document.getElementById("canvas1").getContext("2d");
+     let ancho = ((parseInt({{ asistentes }})*100)/({{ total }}))*2;
+     cx.font="14px Sans";
      cx.fillStyle = "blue";
-     cx.fillRect(10, 145, 55, {{ asistentes }});
+     cx.fillRect(0, 10, ancho, 25);
+     cx.fillText("Asistentes: "+{{ asistentes }}, 210, 25);
+     cx.fillStyle = "#432";
+     ancho = ((parseInt({{ expositores }})*100)/({{ total }}))*2;
+     cx.fillRect(0, 40, ancho, 25);
+     cx.fillText("Expositores: "+{{ expositores }}, 210, 55);
      cx.fillStyle = "green";
-     cx.fillRect(60, 145, 55, {{ expositores }});
+     ancho = ((parseInt({{ logistica }})*100)/({{ total }}))*2;
+     cx.fillRect(0, 70, ancho, 25);
+     cx.fillText("Logística: "+{{ logistica }}, 210, 85);
      cx.fillStyle = "red";
-     cx.fillRect(60, 195, 55, {{ logistica }});
-     cx.fillStyle = "pink";
-     cx.fillRect(60, 235, 55, {{ mesas }});
-     cx.fillStyle = "yellow";
-     cx.fillRect(60, 285, 55, {{ otro }});
-
+     ancho = ((parseInt({{ mesas }})*100)/({{ total }}))*2;
+     cx.fillRect(0, 100, ancho, 25);
+     cx.fillText("Mesas de debate: "+{{ mesas }}, 210, 115);
+     cx.fillStyle = "#559";
+     ancho = ((parseInt({{ otro }})*100)/({{ total }}))*2;
+     cx.fillRect(0, 130, ancho, 25);
+     cx.fillText("Otros: "+{{ otro }}, 210, 145);
+     
     </script>
-	<b>Total registrados:</b> {{ total }}
-    
+    <h3 id="lista">Lista rápida de participantes</h3>
+
     {% for p in participantes reversed %}
 	<hr>
 	<b>Nombre:</b> <a href="/par/{{ p.slug }}/">{{ p.p.nombres }} {{ p.p.apellidos }}</a>
