@@ -107,6 +107,7 @@ def lista(request, slg=''):
         numAsistentes = numExpositores = numLogistica = numMesas = 0
         total = numOtro = 0
         try:
+            numInstaladores = TipoParticipacion.objects.filter(tipo='instalador').count()
             numAsistentes = TipoParticipacion.objects.filter(tipo='asistente').count()
             numExpositores = TipoParticipacion.objects.filter(tipo='expositor').count()
             numLogistica = TipoParticipacion.objects.filter(tipo='logistica').count()
@@ -132,6 +133,7 @@ def lista(request, slg=''):
                            'asistentes': numAsistentes,
                            'logistica': numLogistica,
                            'mesas': numMesas,
+                           'instaladores': numInstaladores,
                            'otro': numOtro,
                            'total': total})
 
